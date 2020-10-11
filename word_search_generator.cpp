@@ -126,8 +126,8 @@ void fit_words_connections(){
     }
     }
     bool connection=false;
-    int x=rand()%3+3;
-    std::string new_word_to_add=list_all_words[x];
+    x=rand()%3+3;
+    new_word_to_add=list_all_words[x];
     for (int i=0; i<list_of_words_added[0].length();i++){
         for (int j=0; j<new_word_to_add.length();j++){
             if(list_of_words_added[0][i]==new_word_to_add[j]){
