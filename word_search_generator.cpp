@@ -3,21 +3,60 @@
 #include <iostream>
 #include <string>
 
+std::string list_all_words[36]={
+    "chief",
+    "quiet",
+    "dress",
+    "aware",
+    "grade",
+    "twice",
+    "broad",
+    "limit",
+    "worth",
+    "below",
+    "feed",
+    "path",
+    "shop",
+    "folk",
+    "lift",
+    "jump",
+    "warm",
+    "soft",
+    "gift",
+    "wave",
+    "deny",
+    "suit",
+    "blow",
+    "cook",
+    "burn",
+    "shoe",
+    "bone",
+    "wine",
+    "boy",
+    "bad",
+    "buy",
+    "jet",
+    "cat",
+    "dog",
+    "pig",
+    "and",
+    };
 
 const int  num_rows=8;
-const int num_of_words=10;
+const int num_of_words=12;
+int restart_count_down;
 char word_search[num_rows*num_rows];
+int solution_pos[num_of_words][4];
+bool list_of_is_reversed[num_of_words];
+std::string list_of_type_pos[num_of_words];
 std::string list_of_words_added[num_of_words];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
-void add_new_word(int j);
+void add_new_word(int u);
 int main()
 {
-     for(int w=0;w<1000;w++){
+     for(int w=0;w<5;w++){
          create_new_word_search();
-         for(int j=0;j<num_of_words;j++){
-         add_new_word(j);
-         }
     for(int i=0;i<num_of_words;i++){
         printf("\"");
         for(int j=0; j<list_of_words_added[i].length();j++){
@@ -26,7 +65,7 @@ int main()
         printf("\",");
     }
     //print puzzle
-    printf("\"");
+    printf("\n\"");
     for (int i=0;i<num_rows;i++){
         for(int j=0; j<num_rows;j++){
             printf("%c",word_search[num_rows*i+j]);
@@ -51,92 +90,101 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             word_search[num_rows*p+h]=letters[x];
         }
     }
+    restart_count_down=0;
+         for(int j=0;j<num_of_words;j++){
+         add_new_word(j);
+         }
 }
-void add_new_word(int j){
- std::string list_all_words[62]={"feed",
-    "title",
-    "faith",
-    "river",
-    "count",
-    "marry",
-    "path",
-    "shop",
-    "folk",
-    "lift",
-    "jump",
-    "limit",
-    "worth",
-    "warm",
-    "soft",
-    "gift",
-    "speed",
-    "cross",
-    "youth",
-    "wave",
-    "broad",
-    "deny",
-    "twice",
-    "suit",
-    "blow",
-    "cook",
-    "burn",
-    "shoe",
-    "grade",
-    "quiet",
-    "dress",
-    "aware",
-    "bone",
-    "chief",
-    "wine",
-    "below",
-    "cool",
-    "voter",
-    "hell",
-    "moral",
-    "tour",
-    "photo",
-    "grab",
-    "daily",
-    "fair",
-    "pair",
-    "knee",
-    "tape",
-    "hire",
-    "fully",
-    "actor",
-    "birth",
-    "clean",
-    "train",
-    "lady",
-    "neck",
-    "lean",
-    "tall",
-    "plate",
-    "hate",
-    "male",
-    "alive",
-    };
-
-    int x=rand()%5+6*j;
-    std::string new_word_to_add=list_all_words[x];
-    bool conection=false;
-    for(int i =0; i<num_of_words;i++){
-        for (int j=0; j<list_of_words_added[i].length();j++){
-            for (int k=0;k<new_word_to_add.length();k++){
-                if(list_of_words_added[i][j]==new_word_to_add[i]){
-                        conection=true;
-                        //do sometype of connection
-                }
-            }
-        }
+void add_new_word(int u){
+restart_count_down++;
+    if(restart_count_down>100){
+        create_new_word_search();
+        return ;
     }
+    int x=rand()%3+3*u;
+    std::string new_word_to_add=list_all_words[x];
     std::string type_of_position;
     int row_start;
     int column_start;
     int row_end;
     int column_end;
+    bool shocks;
+    bool is_reversed;
+    bool connection=false;
+    if(u>0){
+    for(int p=0;p<list_of_words_added[u-1].length();p++){
+        for(int r=0;r<new_word_to_add.length();r++){
+            if(list_of_words_added[u-1][p]==new_word_to_add[r]){
+                if(list_of_type_pos[u-1]=="horizontal"){
+                    if(list_of_is_reversed){
+                    type_of_position="vertical";
+                    is_reversed=false;
+                    row_start=solution_pos[u-1][0]-r;
+                    column_start=solution_pos[u-1][3]-p;
+                    row_end=row_start+new_word_to_add.length()-1;
+                    column_end=column_start;
+                   for (int i =0; i<new_word_to_add.length();i++){
+                if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
+                    if(is_reversed){
+                        if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows        +column_start]){
+                            shocks=true;
+                        }
+            }else{
+                if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+    if(row_start<0 || row_start>num_rows-new_word_to_add.length()){
+        shocks=true;
+    }
+    if(shocks){
+                    shocks=false;
+                    row_start=solution_pos[u-1][0]+new_word_to_add.length()-1+r;
+                    column_start=solution_pos[u-1][3]-p;
+                    row_end=row_start+new_word_to_add.length()-1;
+                    column_end=column_start;
+                   for (int i =0; i<new_word_to_add.length();i++){
+                if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
+                    if(is_reversed){
+                        if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows        +column_start]){
+                            shocks=true;
+                        }
+            }else{
+                if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+    if(row_start<0 || row_start>num_rows-new_word_to_add.length()){
+        shocks=true;
+    }
+    }
+                    }else{
 
-    x=rand()%4;
+                    }
+    if(shocks){
+        connection=false;
+    }else{
+        connection=true;
+    }
+                }
+            }
+            if(connection){
+                break;
+            }
+        }
+    if(connection){
+        break;
+    }
+    }
+    }
+
+printf("\n%i\n",connection);
+    if(!connection){
+x=rand()%4;
     if(x==0){
         type_of_position="horizontal";
         row_start=rand()%num_rows;
@@ -162,12 +210,12 @@ void add_new_word(int j){
         row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start-new_word_to_add.length()+1;
     }
-    bool is_reversed=false;
+    is_reversed=false;
     x=rand()%2;
     if(x==1){
         is_reversed=true;
     }
-    bool shocks=false;
+    shocks=false;
     int limit_row=0;
     int limit_column=0;
     if(type_of_position=="horizontal"){
@@ -222,11 +270,11 @@ for(int k=0; k<num_rows;k++){
             row_end=row_start+new_word_to_add.length()-1;
             column_end=column_start;
             for (int i =0; i<new_word_to_add.length();i++){
-        if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
-            if(is_reversed){
-                if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start]){
-                    shocks=true;
-                }
+                if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
+                    if(is_reversed){
+                        if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows        +column_start]){
+                            shocks=true;
+                        }
             }else{
                 if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start]){
                     shocks=true;
@@ -316,10 +364,11 @@ for(int k=0; k<num_rows;k++){
     }
     }
 
+    }
 
 
     if(shocks){
-        add_new_word(j);
+        add_new_word(u);
     }else{
     if(type_of_position=="horizontal"){
     if(is_reversed){
@@ -375,7 +424,12 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
-    list_of_words_added[j]=new_word_to_add;
-    
+    list_of_words_added[u]=new_word_to_add;
+    solution_pos[u][0]=row_start;
+    solution_pos[u][1]=column_start;
+    solution_pos[u][2]=row_end;
+    solution_pos[u][3]=column_end;
+    list_of_is_reversed[u]=is_reversed;
+    list_of_type_pos[u]=type_of_position;
 }
 }
