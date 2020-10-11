@@ -2,18 +2,29 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+
+
 const int  num_rows=8;
+const int num_of_words=10;
 char word_search[num_rows*num_rows];
+std::string list_of_words_added[num_of_words];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
-void add_new_word();
+void add_new_word(int j);
 int main()
 {
      for(int w=0;w<1000;w++){
          create_new_word_search();
-         for(int j=0;j<15;j++){
-         add_new_word();
+         for(int j=0;j<num_of_words;j++){
+         add_new_word(j);
          }
+    for(int i=0;i<num_of_words;i++){
+        printf("\"");
+        for(int j=0; j<list_of_words_added[i].length();j++){
+            printf("%c", list_of_words_added[i][j]);
+        }
+        printf("\",");
+    }
     //print puzzle
     printf("\"");
     for (int i=0;i<num_rows;i++){
@@ -24,7 +35,7 @@ int main()
     }
     printf("\",\n");
     }
-    
+
 return 0;
 }
 void create_new_word_search(){
@@ -41,8 +52,8 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
     }
 }
-void add_new_word(){
- static const std::string list_all_words[62]={"feed",
+void add_new_word(int j){
+ std::string list_all_words[62]={"feed",
     "title",
     "faith",
     "river",
@@ -106,7 +117,7 @@ void add_new_word(){
     "alive",
     };
     
-    int x=rand()%62;
+    int x=rand()%5+6*j;
     std::string new_word_to_add=list_all_words[x];
     std::string type_of_position;
     int row_start;
@@ -297,7 +308,7 @@ for(int k=0; k<num_rows;k++){
 
 
     if(shocks){
-        add_new_word();
+        add_new_word(j);
     }else{
     if(type_of_position=="horizontal"){
     if(is_reversed){
@@ -353,9 +364,7 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
-    for(int i=0;i<new_word_to_add.length();i++){
-        printf("%c",new_word_to_add[i]);
-    }
-    printf("\n");
-    }
+    list_of_words_added[j]=new_word_to_add;
+    
+}
 }
