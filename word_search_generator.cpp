@@ -46,24 +46,27 @@ const int  num_rows=8;
 const int num_of_words=12;
 int restart_count_down;
 char word_search[num_rows*num_rows];
+/*
 int solution_pos[num_of_words][4];
 bool list_of_is_reversed[num_of_words];
 std::string list_of_type_pos[num_of_words];
+*/
 std::string list_of_words_added[num_of_words];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
 void add_new_word(int u);
 int main()
 {
-     for(int w=0;w<2000;w++){
+     for(int w=0;w<10000;w++){
          create_new_word_search();
+         /*
     for(int i=0;i<num_of_words;i++){
         printf("\"");
         for(int j=0; j<list_of_words_added[i].length();j++){
             printf("%c", list_of_words_added[i][j]);
         }
         printf("\",");
-    }
+    }*/
     //print puzzle
     printf("\n\"");
     for (int i=0;i<num_rows;i++){
@@ -110,9 +113,7 @@ restart_count_down++;
     int column_end;
     bool shocks;
     bool is_reversed;
-    bool connection=false;
-   
-    if(!connection){
+
 x=rand()%4;
     if(x==0){
         type_of_position="horizontal";
@@ -292,8 +293,8 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
-
-    }
+    
+    
 
 
     if(shocks){
@@ -353,12 +354,13 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
+    /*
     list_of_words_added[u]=new_word_to_add;
     solution_pos[u][0]=row_start;
     solution_pos[u][1]=column_start;
     solution_pos[u][2]=row_end;
     solution_pos[u][3]=column_end;
     list_of_is_reversed[u]=is_reversed;
-    list_of_type_pos[u]=type_of_position;
-}
+    list_of_type_pos[u]=type_of_position;*/
+    }
 }
