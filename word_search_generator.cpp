@@ -2,14 +2,33 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+const int  num_rows=8;
+char word_search[num_rows*num_rows];
+std:: string list_words_addded[15];
+bool filled_spaces[num_rows*num_rows];
+void create_new_word_search();
+void add_new_word();
 int main()
 {
-    char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    int num_rows=8;
-    //create an array for the answer to the puzzle and one array to check for words crossing
-    char word_search[num_rows*num_rows];
-    bool filled_spaces[num_rows*num_rows];
-    for(int w=0;w<10000;w++){
+     for(int w=0;w<1;w++){
+         create_new_word_search();
+         for(int j=0;j<15;j++){
+         add_new_word();
+         }
+    //print puzzle
+    printf("\"");
+    for (int i=0;i<num_rows;i++){
+        for(int j=0; j<num_rows;j++){
+            printf("%c",word_search[num_rows*i+j]);
+        }
+        printf("\n");
+    }
+    printf("\",\n");
+    }
+return 0;
+}
+void create_new_word_search(){
+char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for (int p=0;p<num_rows;p++){
         for (int l=0;l<num_rows;l++){
             filled_spaces[num_rows*p+l]=false;
@@ -21,8 +40,9 @@ int main()
             word_search[num_rows*p+h]=letters[x];
         }
     }
-    //creating arrays with words that will be used
-    static const std::string list_all_words[1000]={"feed",
+}
+void add_new_word(){
+ static const std::string list_all_words[1000]={"feed",
     "title",
     "faith",
     "river",
@@ -1022,42 +1042,252 @@ int main()
     "full",
     "model",
     "join"};
-    
     int x=rand()%1000;
     std::string new_word_to_add=list_all_words[x];
     std::string type_of_position;
+    int row_start;
+    int column_start;
+    int row_end;
+    int column_end;
+
     x=rand()%4;
     if(x==0){
         type_of_position="horizontal";
-        int row_start=rand()%num_rows;
-        int column_start=rand()%(num_rows-new_word_to_add.length()+1);
+        row_start=rand()%num_rows;
+        column_start=rand()%(num_rows-new_word_to_add.length()+1);
+        row_end=row_start;
+        column_end=column_start+new_word_to_add.length()-1;
     }else if(x==1){
         type_of_position="vertical";
-        int row_start=rand()%(num_rows-new_word_to_add.length()+1);
-        int column_start=rand()%num_rows;
+        row_start=rand()%(num_rows-new_word_to_add.length()+1);
+        column_start=rand()%num_rows;
+        row_end=row_start+new_word_to_add.length()-1;
+        column_end=column_start;
     }else if(x==2){
         type_of_position="diagonal_SE";
-        int row_start=rand()%(num_rows-new_word_to_add.length()+1);
-        int column_start=rand()%(num_rows-new_word_to_add.length()+1);
+        row_start=rand()%(num_rows-new_word_to_add.length()+1);
+        column_start=rand()%(num_rows-new_word_to_add.length()+1);
+        row_end=row_start+new_word_to_add.length()-1;
+        column_end=column_start+new_word_to_add.length()-1;
     }else{
         type_of_position="diagonal_SO";
-        int row_start=rand()%(num_rows-new_word_to_add.length()+1);;
-        int column_start=num_rows-rand()%(num_rows-new_word_to_add.length()+1);
+        row_start=rand()%(num_rows-new_word_to_add.length()+1);;
+        column_start=num_rows-rand()%(num_rows-new_word_to_add.length()+1);
+        row_end=row_start+new_word_to_add.length()-1;
+        column_end=column_start-new_word_to_add.length()+1;
     }
     bool is_reversed=false;
     x=rand()%2;
     if(x==1){
         is_reversed=true;
     }
-
-    //print puzzle
-    printf("\"");
-    for (int i=0;i<num_rows;i++){
-        for(int j=0; j<num_rows;j++){
-            printf("%c",word_search[num_rows*i+j]);
+    bool shocks=false;
+    int limit_row=0;
+    int limit_column=0;
+    if(type_of_position=="horizontal"){
+    for(int k=0; k<num_rows;k++){
+        for(int l=0;l<num_rows;l++){
+            row_start=row_start+k-limit_row;
+            column_start=column_start+l-limit_column;
+            if(row_start==num_rows){
+                row_start=0;
+                limit_row=k;
+            }
+            if(column_start==num_rows){
+                column_start=0;
+                limit_column=l;
+            }
+            row_end=row_start;
+            column_end=column_start+new_word_to_add.length()-1;
+            for (int i =0; i<new_word_to_add.length();i++){
+        if(filled_spaces[row_start*num_rows+column_start+i]==1){
+            if(is_reversed){
+                if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[row_start*num_rows+column_start+i]){
+                    shocks=true;
+                }
+            }else{
+                if(new_word_to_add[i]!=word_search[row_start*num_rows+column_start+i]){
+                    shocks=true;
+                }
+            }
         }
     }
-    printf("\",\n");
+    if(shocks==false){
+        break;
     }
-return 0;
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    }else if(type_of_position=="vertical"){
+for(int k=0; k<num_rows;k++){
+        for(int l=0;l<num_rows;l++){
+            row_start=row_start+k-limit_row;
+            column_start=column_start+l-limit_column;
+            if(row_start==num_rows){
+                row_start=0;
+                limit_row=k;
+            }
+            if(column_start==num_rows){
+                column_start=0;
+                limit_column=l;
+            }
+            row_end=row_start+new_word_to_add.length()-1;
+            column_end=column_start;
+            for (int i =0; i<new_word_to_add.length();i++){
+        if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
+            if(is_reversed){
+                if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start]){
+                    shocks=true;
+                }
+            }else{
+                if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    }else if(type_of_position=="diagonal_SE"){
+for(int k=0; k<num_rows;k++){
+        for(int l=0;l<num_rows;l++){
+            row_start=row_start+k-limit_row;
+            column_start=column_start+l-limit_column;
+            if(row_start==num_rows){
+                row_start=0;
+                limit_row=k;
+            }
+            if(column_start==num_rows){
+                column_start=0;
+                limit_column=l;
+            }
+            row_end=row_start+new_word_to_add.length()-1;
+            column_end=column_start+new_word_to_add.length()-1;
+            for (int i =0; i<new_word_to_add.length();i++){
+        if(filled_spaces[(row_start+i)*num_rows+column_start+i]==1){
+            if(is_reversed){
+                if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start+i]){
+                    shocks=true;
+                }
+            }else{
+                if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start+i]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    }else if(type_of_position=="diagonal_SO"){
+        for(int k=0; k<num_rows;k++){
+        for(int l=0;l<num_rows;l++){
+            row_start=row_start+k-limit_row;
+            column_start=column_start+l-limit_column;
+            if(row_start==num_rows){
+                row_start=0;
+                limit_row=k;
+            }
+            if(column_start==num_rows){
+                column_start=0;
+                limit_column=l;
+            }
+            row_end=row_start+new_word_to_add.length()-1;
+        column_end=column_start-new_word_to_add.length()+1;
+            for (int i =0; i<new_word_to_add.length();i++){
+        if(filled_spaces[(row_start+i)*num_rows+column_start-i]==1){
+            if(is_reversed){
+                if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start-i]){
+                    shocks=true;
+                }
+            }else{
+                if(new_word_to_add[i]!=word_search[(row_start+i)*num_rows+column_start-i]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    if(shocks==false){
+        break;
+    }
+    }
+    }
+
+
+
+    if(shocks){
+        add_new_word();
+    }else{
+    if(type_of_position=="horizontal"){
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(row_start)+column_start+i]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start)+column_start+i]=new_word_to_add[i];
+        filled_spaces[num_rows*(row_start)+column_start+i]=1;
+    }
+
+    }
+    }else if(type_of_position=="vertical"){
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(row_start+i)+column_start]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start]=new_word_to_add[i];
+        filled_spaces[num_rows*(row_start+i)+column_start]=1;
+    }
+    }
+    }else if(type_of_position=="diagonal_SE"){
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start+i]=new_word_to_add[i];
+        filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
+    }
+    }
+    }else if(type_of_position=="diagonal_SO"){
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start-i]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(row_start+i)+column_start-i]=new_word_to_add[i];
+        filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
+    }
+    }
+    }
+    }
 }
