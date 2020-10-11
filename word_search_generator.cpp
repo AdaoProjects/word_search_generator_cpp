@@ -46,18 +46,20 @@ const int  num_rows=8;
 const int num_of_words=12;
 int restart_count_down;
 char word_search[num_rows*num_rows];
-/*
+
 int solution_pos[num_of_words][4];
+/*
 bool list_of_is_reversed[num_of_words];
 std::string list_of_type_pos[num_of_words];
 */
 std::string list_of_words_added[num_of_words];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
+void fit_words_connections();
 void add_new_word(int u);
 int main()
 {
-     for(int w=0;w<10000;w++){
+     for(int w=0;w<1000;w++){
          create_new_word_search();
          /*
     for(int i=0;i<num_of_words;i++){
@@ -93,10 +95,88 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             word_search[num_rows*p+h]=letters[x];
         }
     }
+    fit_words_connections();
     restart_count_down=0;
-         for(int j=0;j<num_of_words;j++){
+         for(int j=5;j<num_of_words;j++){
          add_new_word(j);
          }
+}
+void fit_words_connections(){
+    int x=rand()%3;
+    std::string new_word_to_add=list_all_words[x];
+    list_of_words_added[0]=new_word_to_add;
+    solution_pos[0][0]=rand()%(num_rows-new_word_to_add.length()+1);
+    solution_pos[0][1]=rand()%(num_rows-new_word_to_add.length()+1);
+    solution_pos[0][2]=solution_pos[0][0]+new_word_to_add.length()-1;
+    solution_pos[0][3]=solution_pos[0][1]+new_word_to_add.length()-1;
+    bool is_reversed=false;
+    if(rand()%2==0){
+        is_reversed=true;
+    }
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[i];
+        filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
+    }
+    }
+    bool connection=false;
+    int x=rand()%3+3;
+    std::string new_word_to_add=list_all_words[x];
+    for (int i=0; i<list_of_words_added[0].length();i++){
+        for (int j=0; j<new_word_to_add.length();j++){
+            if(list_of_words_added[0][i]==new_word_to_add[j]){
+                connection=true;
+                if(is_reversed){
+                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
+                    solution_pos[1][1]=solution_pos[0][1]-j;
+                    solution_pos[1][2]=solution_pos[1][0];
+                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
+                    is_reversed=false;
+                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
+                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
+                    solution_pos[1][1]=solution_pos[0][1]-new_word_to_add.length()+1+j;
+                    solution_pos[1][2]=solution_pos[1][0];
+                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
+                    is_reversed=true;
+                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
+                    connection=false;
+                    }
+                    }
+                }else{
+                    solution_pos[1][0]=solution_pos[0][0]+i;
+                    solution_pos[1][1]=solution_pos[0][1]-j;
+                    solution_pos[1][2]=solution_pos[1][0];
+                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
+                    is_reversed=false;
+                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
+                    solution_pos[1][0]=solution_pos[0][0]+i;
+                    solution_pos[1][1]=solution_pos[0][1]-new_word_to_add.length()+1+j;
+                    solution_pos[1][2]=solution_pos[1][0];
+                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
+                    is_reversed=true;
+                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
+                    connection=false;
+                    }
+                    }
+                }
+            }
+            if(connection==1){
+                break;
+            }
+        }
+        if(connection==1){
+                break;
+            }
+    }
+    if(!connection){
+        add_new_word(1);
+    }
 }
 void add_new_word(int u){
 restart_count_down++;
