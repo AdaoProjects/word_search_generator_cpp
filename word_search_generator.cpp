@@ -9,9 +9,9 @@ void create_new_word_search();
 void add_new_word();
 int main()
 {
-     for(int w=0;w<1;w++){
+     for(int w=0;w<10000;w++){
          create_new_word_search();
-         for(int j=0;j<15;j++){
+         for(int j=0;j<10;j++){
          add_new_word();
          }
     //print puzzle
@@ -1042,6 +1042,7 @@ void add_new_word(){
     "full",
     "model",
     "join"};
+    
     int x=rand()%1000;
     std::string new_word_to_add=list_all_words[x];
     std::string type_of_position;
