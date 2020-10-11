@@ -177,6 +177,19 @@ void fit_words_connections(){
     if(!connection){
         add_new_word(1);
     }
+    if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[i];
+        filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
+    }
+
+    }
 }
 void add_new_word(int u){
 restart_count_down++;
