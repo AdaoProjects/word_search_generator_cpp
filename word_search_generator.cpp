@@ -4,7 +4,6 @@
 #include <string>
 const int  num_rows=8;
 char word_search[num_rows*num_rows];
-std:: string list_words_addded[15];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
 void add_new_word();
@@ -25,6 +24,7 @@ int main()
     }
     printf("\",\n");
     }
+    
 return 0;
 }
 void create_new_word_search(){
@@ -1289,5 +1289,9 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
+    for(int i=0;i<new_word_to_add.length();i++){
+        printf("%c",new_word_to_add[i]);
+    }
+    printf("\n");
     }
 }
