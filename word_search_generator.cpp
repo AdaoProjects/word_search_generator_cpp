@@ -59,7 +59,7 @@ void fit_words_connections();
 void add_new_word(int u);
 int main()
 {
-     for(int w=0;w<1000;w++){
+     for(int w=0;w<500;w++){
          create_new_word_search();
          /*
     for(int i=0;i<num_of_words;i++){
@@ -176,7 +176,7 @@ void fit_words_connections(){
     }
     if(!connection){
         add_new_word(1);
-    }
+    }else{
     if(is_reversed){
         for(int i=0; i<new_word_to_add.length();i++){
         word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
@@ -190,6 +190,91 @@ void fit_words_connections(){
     }
 
     }
+    }
+    list_of_words_added[1]=new_word_to_add;
+    connection=false;
+    bool shocks=false;
+    x=rand()%3+6;
+    new_word_to_add=list_all_words[x];
+    for (int i=0; i<list_of_words_added[1].length();i++){
+        for (int j=0; j<new_word_to_add.length();j++){
+            if(list_of_words_added[1][i]==new_word_to_add[j]){
+                connection=true;
+                if(is_reversed){
+                    solution_pos[2][0]=solution_pos[1][0]-j;
+                    solution_pos[2][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
+                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
+                    solution_pos[2][3]=solution_pos[2][1];
+                    is_reversed=false;
+                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
+                    solution_pos[2][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
+                    solution_pos[2][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
+                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
+                    solution_pos[2][3]=solution_pos[2][1];
+                    is_reversed=true;
+                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
+                    connection=false;
+                    }
+                    }
+                }else{
+                    solution_pos[2][0]=solution_pos[1][0]-j;
+                    solution_pos[2][1]=solution_pos[1][1]+i;
+                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
+                    solution_pos[2][3]=solution_pos[2][1];
+                    is_reversed=false;
+                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
+                    solution_pos[2][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
+                    solution_pos[2][1]=solution_pos[1][1]+i;
+                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
+                    solution_pos[2][3]=solution_pos[2][1];
+                    is_reversed=true;
+                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
+                    connection=false;
+                    }
+                    }
+                }
+            }
+            if(connection){
+                for (int k =0; k<new_word_to_add.length();k++){
+                if(filled_spaces[(solution_pos[2][0]+i)*num_rows+solution_pos[2][1]]==1){
+                    if(is_reversed){
+                        if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[2][0]+k)*num_rows        +solution_pos[2][1]]){
+                            shocks=true;
+                        }
+            }else{
+                if(new_word_to_add[k]!=word_search[(solution_pos[2][0]+k)*num_rows+solution_pos[2][1]]){
+                    shocks=true;
+                }
+            }
+        }
+    }
+            }
+            if(connection && !shocks){
+                break;
+            }
+        }
+        if(connection && !shocks){
+                break;
+            }
+    }
+    printf("%i",connection);
+    if(!connection){
+        add_new_word(2);
+    }else{
+if(is_reversed){
+        for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[new_word_to_add.length()-i-1];
+        filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
+    }
+    }
+    else{
+    for(int i=0; i<new_word_to_add.length();i++){
+        word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[i];
+        filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
+    }
+    }
+    }
+    list_of_words_added[2]=new_word_to_add;
 }
 void add_new_word(int u){
 restart_count_down++;
