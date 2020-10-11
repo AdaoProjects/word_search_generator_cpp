@@ -116,9 +116,20 @@ void add_new_word(int j){
     "male",
     "alive",
     };
-    
+
     int x=rand()%5+6*j;
     std::string new_word_to_add=list_all_words[x];
+    bool conection=false;
+    for(int i =0; i<num_of_words;i++){
+        for (int j=0; j<list_of_words_added[i].length();j++){
+            for (int k=0;k<new_word_to_add.length();k++){
+                if(list_of_words_added[i][j]==new_word_to_add[i]){
+                        conection=true;
+                        //do sometype of connection
+                }
+            }
+        }
+    }
     std::string type_of_position;
     int row_start;
     int column_start;
