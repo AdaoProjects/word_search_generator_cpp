@@ -57,22 +57,33 @@ int main()
      for(int w=0;w<1000 ;w++){
          create_new_word_search();
          /*
+         printf("[");
+         for(int i=0;i<num_of_words;i++){
+         printf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
+         }
+         printf("],\n");
+*/
+/*
+         printf("[");
     for(int i=0;i<num_of_words;i++){
         printf("\"");
         for(int j=0; j<list_of_words_added[i].length();j++){
             printf("%c", list_of_words_added[i][j]);
         }
         printf("\",");
-    }*/
-    //print puzzle
-    printf("\n\"");
+    }
+    printf("],\n");
+  */
+   //print puzzle
+    
+    printf("[\"");
     for (int i=0;i<num_rows;i++){
         for(int j=0; j<num_rows;j++){
             printf("%c",word_search[num_rows*i+j]);
         }
-        printf("\n");
     }
-    printf("\",\n");
+    printf("\"],\n");
+    
     }
 
 return 0;
@@ -392,7 +403,7 @@ x=rand()%4;
     }else{
         type_of_position="diagonal_SO";
         row_start=rand()%(num_rows-new_word_to_add.length()+1);;
-        column_start=num_rows-rand()%(num_rows-new_word_to_add.length()+1);
+        column_start=num_rows-1-rand()%(num_rows-new_word_to_add.length()+1);
         row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start-new_word_to_add.length()+1;
     }
@@ -413,7 +424,7 @@ x=rand()%4;
                 row_start=0;
                 limit_row=k;
             }
-            if(column_start==num_rows){
+            if(column_start==num_rows-new_word_to_add.length()+1){
                 column_start=0;
                 limit_column=l;
             }
@@ -445,7 +456,7 @@ for(int k=0; k<num_rows;k++){
         for(int l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start+l-limit_column;
-            if(row_start==num_rows){
+            if(row_start==num_rows-new_word_to_add.length()+1){
                 row_start=0;
                 limit_row=k;
             }
@@ -481,11 +492,11 @@ for(int k=0; k<num_rows;k++){
         for(int l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start+l-limit_column;
-            if(row_start==num_rows){
+            if(row_start==num_rows-new_word_to_add.length()+1){
                 row_start=0;
                 limit_row=k;
             }
-            if(column_start==num_rows){
+            if(column_start==num_rows-new_word_to_add.length()+1){
                 column_start=0;
                 limit_column=l;
             }
@@ -516,13 +527,13 @@ for(int k=0; k<num_rows;k++){
         for(int k=0; k<num_rows;k++){
         for(int l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
-            column_start=column_start+l-limit_column;
-            if(row_start==num_rows){
+            column_start=column_start-l+limit_column;
+            if(row_start==num_rows-new_word_to_add.length()+1){
                 row_start=0;
                 limit_row=k;
             }
-            if(column_start==num_rows){
-                column_start=0;
+            if(column_start==num_rows-new_word_to_add.length()-2){
+                column_start=num_rows-1;
                 limit_column=l;
             }
             row_end=row_start+new_word_to_add.length()-1;
@@ -610,13 +621,14 @@ for(int k=0; k<num_rows;k++){
     }
     }
     }
-    /*
+    
     list_of_words_added[u]=new_word_to_add;
+    
+   
     solution_pos[u][0]=row_start;
     solution_pos[u][1]=column_start;
     solution_pos[u][2]=row_end;
     solution_pos[u][3]=column_end;
-    list_of_is_reversed[u]=is_reversed;
-    list_of_type_pos[u]=type_of_position;*/
+    
     }
 }
