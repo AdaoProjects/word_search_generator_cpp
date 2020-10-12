@@ -46,12 +46,7 @@ const int  num_rows=8;
 const int num_of_words=12;
 int restart_count_down;
 char word_search[num_rows*num_rows];
-
 int solution_pos[num_of_words][4];
-/*
-bool list_of_is_reversed[num_of_words];
-std::string list_of_type_pos[num_of_words];
-*/
 std::string list_of_words_added[num_of_words];
 bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
@@ -97,7 +92,7 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
     fit_words_connections();
     restart_count_down=0;
-         for(int j=5;j<num_of_words;j++){
+         for(int j=3;j<num_of_words;j++){
          add_new_word(j);
          }
 }
@@ -174,7 +169,7 @@ void fit_words_connections(){
                 break;
             }
     }
-    printf("%i", connection);
+    
     if(!connection){
         add_new_word(1);
     }else{
@@ -258,7 +253,7 @@ void fit_words_connections(){
                 break;
             }
     }
-    printf("%i",connection);
+    
     if(!connection){
         add_new_word(2);
     }else{
@@ -279,7 +274,7 @@ if(is_reversed){
 }
 void add_new_word(int u){
 restart_count_down++;
-    if(restart_count_down>100){
+    if(restart_count_down>500){
         create_new_word_search();
         return ;
     }
