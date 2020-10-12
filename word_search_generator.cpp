@@ -75,7 +75,7 @@ int main()
     printf("],\n");
   */
    //print puzzle
-    
+   
     printf("[\"");
     for (int i=0;i<num_rows;i++){
         for(int j=0; j<num_rows;j++){
@@ -83,7 +83,7 @@ int main()
         }
     }
     printf("\"],\n");
-    
+  
     }
 
 return 0;
@@ -197,8 +197,9 @@ void fit_words_connections(){
     }
 
     }
+list_of_words_added[1]=new_word_to_add;
     }
-    list_of_words_added[1]=new_word_to_add;
+    
     connection=false;
     bool shocks=false;
     x=rand()%3+6;
@@ -241,9 +242,10 @@ void fit_words_connections(){
                     }
                 }
             }
+            shocks=false;
             if(connection){
                 for (int k =0; k<new_word_to_add.length();k++){
-                if(filled_spaces[(solution_pos[2][0]+i)*num_rows+solution_pos[2][1]]==1){
+                if(filled_spaces[(solution_pos[2][0]+k)*num_rows+solution_pos[2][1]]==1){
                     if(is_reversed){
                         if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[2][0]+k)*num_rows        +solution_pos[2][1]]){
                             shocks=true;
@@ -264,7 +266,7 @@ void fit_words_connections(){
                 break;
             }
     }
-    if(!connection){
+    if(!connection || shocks){
         add_new_word(2);
     }else{
 if(is_reversed){
@@ -279,8 +281,9 @@ if(is_reversed){
         filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
     }
     }
-    }
     list_of_words_added[2]=new_word_to_add;
+    }
+    
     connection=false;
     shocks=false;
     x=rand()%3+9;
@@ -323,9 +326,10 @@ if(is_reversed){
                     }
                 }
             }
+            shocks=false;
             if(connection){
                 for (int k =0; k<new_word_to_add.length();k++){
-                if(filled_spaces[(solution_pos[3][0]+i)*num_rows+solution_pos[3][1]]==1){
+                if(filled_spaces[(solution_pos[3][0]+k)*num_rows+solution_pos[3][1]]==1){
                     if(is_reversed){
                         if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[3][0]+k)*num_rows        +solution_pos[3][1]]){
                             shocks=true;
@@ -347,7 +351,7 @@ if(is_reversed){
             }
     }
     
-    if(!connection){
+    if(!connection || shocks){
         add_new_word(3);
     }else{
 if(is_reversed){
@@ -362,8 +366,9 @@ if(is_reversed){
         filled_spaces[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=1;
     }
     }
-    }
     list_of_words_added[3]=new_word_to_add;
+    }
+    
 }
 void add_new_word(int u){
 restart_count_down++;
@@ -623,8 +628,6 @@ for(int k=0; k<num_rows;k++){
     }
     
     list_of_words_added[u]=new_word_to_add;
-    
-   
     solution_pos[u][0]=row_start;
     solution_pos[u][1]=column_start;
     solution_pos[u][2]=row_end;
