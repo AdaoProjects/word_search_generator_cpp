@@ -2,48 +2,72 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-
-std::string list_all_words[36]={
-    "chief",
-    "quiet",
-    "dress",
-    "aware",
-    "grade",
-    "twice",
-    "broad",
-    "limit",
-    "worth",
-    "below",
-    "feed",
-    "path",
-    "shop",
-    "folk",
-    "lift",
-    "jump",
-    "warm",
-    "soft",
-    "gift",
-    "wave",
-    "deny",
-    "suit",
-    "blow",
-    "cook",
-    "burn",
-    "shoe",
-    "bone",
-    "wine",
-    "boy",
-    "bad",
-    "buy",
-    "jet",
-    "cat",
-    "dog",
-    "pig",
-    "and",
+const int num_of_possibilites__words=3;
+static std::string list_all_words[60]={
+"prolixo",
+"sucinto",
+"redimir",
+"cordial",
+"exortar",
+"emergir",
+"condiz",
+"sabido",
+"pessoa",
+"servil",
+"frugal",
+"talvez",
+"solene",
+"avidez",
+"eficaz",
+"pressa",
+"hostil",
+"isento",
+"verso",
+"falso",
+"leito",
+"nobre",
+"censo",
+"comum",
+"dengo",
+"mexer",
+"algoz",
+"foco",
+"doce",
+"fase",
+"cota",
+"suma",
+"mito",
+"nojo",
+"meio",
+"face",
+"auto",
+"teor",
+"tudo",
+"pose",
+"ante",
+"teve",
+"pela",
+"arte",
+"tese",
+"fora",
+"novo",
+"lume",
+"fito",
+"joia",
+"alma",
+"ovo",
+"bar",
+"vai",
+"lei",
+"seu",
+"rua",
+"dor",
+"pro",
+"pai"
     };
 
-const int  num_rows=8;
-const int num_of_words=12;
+const int  num_rows=12;
+const int num_of_words=20;
 int restart_count_down;
 char word_search[num_rows*num_rows];
 int solution_pos[num_of_words][4];
@@ -62,8 +86,8 @@ int main()
          printf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
          }
          printf("],\n");
-*/
-/*
+        */
+
          printf("[");
     for(int i=0;i<num_of_words;i++){
         printf("\"");
@@ -73,9 +97,9 @@ int main()
         printf("\",");
     }
     printf("],\n");
-  */
+  
    //print puzzle
-   
+   /*
     printf("[\"");
     for (int i=0;i<num_rows;i++){
         for(int j=0; j<num_rows;j++){
@@ -83,9 +107,9 @@ int main()
         }
     }
     printf("\"],\n");
-  
-    }
 
+    */
+    }
 return 0;
 }
 void create_new_word_search(){
@@ -108,7 +132,7 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
          }
 }
 void fit_words_connections(){
-    int x=rand()%3;
+    int x=rand()%num_of_possibilites__words;
     std::string new_word_to_add=list_all_words[x];
     list_of_words_added[0]=new_word_to_add;
     solution_pos[0][0]=rand()%(num_rows-new_word_to_add.length()+1);
@@ -132,7 +156,7 @@ void fit_words_connections(){
     }
     }
     bool connection=false;
-    x=rand()%3+3;
+    x=rand()%num_of_possibilites__words+num_of_possibilites__words;
     new_word_to_add=list_all_words[x];
     for (int i=0; i<list_of_words_added[0].length();i++){
         for (int j=0; j<new_word_to_add.length();j++){
@@ -202,7 +226,7 @@ list_of_words_added[1]=new_word_to_add;
     
     connection=false;
     bool shocks=false;
-    x=rand()%3+6;
+    x=rand()%num_of_possibilites__words+num_of_possibilites__words*2;
     new_word_to_add=list_all_words[x];
     for (int i=0; i<list_of_words_added[1].length();i++){
         for (int j=0; j<new_word_to_add.length();j++){
@@ -286,7 +310,7 @@ if(is_reversed){
     
     connection=false;
     shocks=false;
-    x=rand()%3+9;
+    x=rand()%num_of_possibilites__words+num_of_possibilites__words*3;
     new_word_to_add=list_all_words[x];
     for (int i=0; i<list_of_words_added[1].length();i++){
         for (int j=0; j<new_word_to_add.length();j++){
@@ -376,7 +400,7 @@ restart_count_down++;
         create_new_word_search();
         return ;
     }
-    int x=rand()%3+3*u;
+    int x=rand()%num_of_possibilites__words+num_of_possibilites__words*u;
     std::string new_word_to_add=list_all_words[x];
     std::string type_of_position;
     int row_start;

@@ -26657,7 +26657,7 @@ int main(){
 "zurich"
     };
     for (int i=0; i<26600;i++){
-        if(list_all_words[i].length()>2 && list_all_words[i].length()<6){
+        if(list_all_words[i].length()==7){
         printf("\"");
         for(int j=0; j<list_all_words[i].length();j++){
             printf("%c",list_all_words[i][j]);
