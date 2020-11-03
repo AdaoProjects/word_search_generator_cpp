@@ -5,7 +5,7 @@
 const short num_of_possibilites__words=3;
 static std::string list_all_words[60]={
 "prolixo",
-"sucshorto",
+"sucinto",
 "redimir",
 "cordial",
 "exortar",
