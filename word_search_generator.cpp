@@ -76,27 +76,27 @@ bool filled_spaces[num_rows*num_rows];
 void create_new_word_search();
 void fit_words_connections();
 void add_new_word(short u);
-short main()
+int main()
 {
      for(short w=0;w<1000 ;w++){
          create_new_word_search();
          /*
-         prshortf("[");
+         printf("[");
          for(short i=0;i<num_of_words;i++){
          prshortf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
          }
          prshortf("],\n");
         */
 
-         prshortf("[");
+         printf("[");
     for(short i=0;i<num_of_words;i++){
-        prshortf("\"");
+        printf("\"");
         for(short j=0; j<list_of_words_added[i].length();j++){
-            prshortf("%c", list_of_words_added[i][j]);
+            printf("%c", list_of_words_added[i][j]);
         }
-        prshortf("\",");
+        printf("\",");
     }
-    prshortf("],\n");
+    printf("],\n");
   
    //prshort puzzle
    /*
@@ -144,13 +144,13 @@ void fit_words_connections(){
         is_reversed=true;
     }
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[i];
         filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
     }
@@ -158,8 +158,8 @@ void fit_words_connections(){
     bool connection=false;
     x=rand()%num_of_possibilites__words+num_of_possibilites__words;
     new_word_to_add=list_all_words[x];
-    for (short i=0; i<list_of_words_added[0].length();i++){
-        for (short j=0; j<new_word_to_add.length();j++){
+    for (short i=0,length=list_of_words_added[0].length(); i<length;i++){
+        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
             if(list_of_words_added[0][i]==new_word_to_add[j]){
                 connection=true;
                 if(is_reversed){
@@ -209,13 +209,13 @@ void fit_words_connections(){
         add_new_word(1);
     }else{
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[i];
         filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
     }
@@ -228,8 +228,8 @@ list_of_words_added[1]=new_word_to_add;
     bool shocks=false;
     x=rand()%num_of_possibilites__words+num_of_possibilites__words*2;
     new_word_to_add=list_all_words[x];
-    for (short i=0; i<list_of_words_added[1].length();i++){
-        for (short j=0; j<new_word_to_add.length();j++){
+    for (short i=0, length=list_of_words_added[1].length(); i<length;i++){
+        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
             if(list_of_words_added[1][i]==new_word_to_add[j]){
                 connection=true;
                 if(is_reversed){
@@ -268,7 +268,7 @@ list_of_words_added[1]=new_word_to_add;
             }
             shocks=false;
             if(connection){
-                for (short k =0; k<new_word_to_add.length();k++){
+                for (short k =0,length_three=new_word_to_add.length(); k<length_three;k++){
                 if(filled_spaces[(solution_pos[2][0]+k)*num_rows+solution_pos[2][1]]==1){
                     if(is_reversed){
                         if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[2][0]+k)*num_rows        +solution_pos[2][1]]){
@@ -294,13 +294,13 @@ list_of_words_added[1]=new_word_to_add;
         add_new_word(2);
     }else{
 if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[i];
         filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
     }
@@ -312,8 +312,8 @@ if(is_reversed){
     shocks=false;
     x=rand()%num_of_possibilites__words+num_of_possibilites__words*3;
     new_word_to_add=list_all_words[x];
-    for (short i=0; i<list_of_words_added[1].length();i++){
-        for (short j=0; j<new_word_to_add.length();j++){
+    for (short i=0, length=list_of_words_added[1].length(); i<length;i++){
+        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
             if(list_of_words_added[1][i]==new_word_to_add[j]){
                 connection=true;
                 if(is_reversed){
@@ -352,7 +352,7 @@ if(is_reversed){
             }
             shocks=false;
             if(connection){
-                for (short k =0; k<new_word_to_add.length();k++){
+                for (short k =0, length_three=new_word_to_add.length(); k<length_three;k++){
                 if(filled_spaces[(solution_pos[3][0]+k)*num_rows+solution_pos[3][1]]==1){
                     if(is_reversed){
                         if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[3][0]+k)*num_rows        +solution_pos[3][1]]){
@@ -379,13 +379,13 @@ if(is_reversed){
         add_new_word(3);
     }else{
 if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0, length=new_word_to_add.length(); i<length;i++){
         word_search[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=new_word_to_add[i];
         filled_spaces[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=1;
     }
@@ -409,6 +409,7 @@ restart_count_down++;
     short column_end;
     bool shocks;
     bool is_reversed;
+    short length=new_word_to_add.length();
 
 x=rand()%4;
     if(x==0){
@@ -459,7 +460,7 @@ x=rand()%4;
             }
             row_end=row_start;
             column_end=column_start+new_word_to_add.length()-1;
-            for (short i =0; i<new_word_to_add.length();i++){
+            for (short i =0; i<length;i++){
         if(filled_spaces[row_start*num_rows+column_start+i]==1){
             if(is_reversed){
                 if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[row_start*num_rows+column_start+i]){
@@ -495,7 +496,7 @@ for(short k=0; k<num_rows;k++){
             }
             row_end=row_start+new_word_to_add.length()-1;
             column_end=column_start;
-            for (short i =0; i<new_word_to_add.length();i++){
+            for (short i =0; i<length;i++){
                 if(filled_spaces[(row_start+i)*num_rows+column_start]==1){
                     if(is_reversed){
                         if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows        +column_start]){
@@ -531,7 +532,7 @@ for(short k=0; k<num_rows;k++){
             }
             row_end=row_start+new_word_to_add.length()-1;
             column_end=column_start+new_word_to_add.length()-1;
-            for (short i =0; i<new_word_to_add.length();i++){
+            for (short i =0; i<length;i++){
         if(filled_spaces[(row_start+i)*num_rows+column_start+i]==1){
             if(is_reversed){
                 if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start+i]){
@@ -567,7 +568,7 @@ for(short k=0; k<num_rows;k++){
             }
             row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start-new_word_to_add.length()+1;
-            for (short i =0; i<new_word_to_add.length();i++){
+            for (short i =0; i<length;i++){
         if(filled_spaces[(row_start+i)*num_rows+column_start-i]==1){
             if(is_reversed){
                 if(new_word_to_add[new_word_to_add.length()-1-i]!=word_search[(row_start+i)*num_rows+column_start-i]){
@@ -598,13 +599,13 @@ for(short k=0; k<num_rows;k++){
     }else{
     if(type_of_position=="horizontal"){
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0; i<length;i++){
         word_search[num_rows*(row_start)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start)+column_start+i]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0; i<length;i++){
         word_search[num_rows*(row_start)+column_start+i]=new_word_to_add[i];
         filled_spaces[num_rows*(row_start)+column_start+i]=1;
     }
@@ -612,39 +613,39 @@ for(short k=0; k<num_rows;k++){
     }
     }else if(type_of_position=="vertical"){
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start]=new_word_to_add[i];
         filled_spaces[num_rows*(row_start+i)+column_start]=1;
     }
     }
     }else if(type_of_position=="diagonal_SE"){
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start+i]=new_word_to_add[i];
         filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
     }
     }
     }else if(type_of_position=="diagonal_SO"){
     if(is_reversed){
-        for(short i=0; i<new_word_to_add.length();i++){
+        for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start-i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
     }
     }
     else{
-    for(short i=0; i<new_word_to_add.length();i++){
+    for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start-i]=new_word_to_add[i];
         filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
     }
