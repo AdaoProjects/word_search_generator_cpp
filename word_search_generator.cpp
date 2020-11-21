@@ -2,59 +2,39 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-const short num_of_possibilites__words=3;
-static std::string list_all_words[60]={
-"prolixo",
-"sucinto",
-"redimir",
-"cordial",
-"exortar",
-"emergir",
-"condiz",
-"sabido",
-"pessoa",
-"servil",
-"frugal",
-"talvez",
-"solene",
-"avidez",
-"eficaz",
-"pressa",
-"hostil",
-"isento",
-"verso",
-"falso",
-"leito",
-"nobre",
-"censo",
-"comum",
-"dengo",
-"mexer",
-"algoz",
-"foco",
-"doce",
-"fase",
+const short num_of_possibilites__words=2;
+static std::string list_all_words[40]={
+"present",
+"tutors",
+"yours",
+"youth",
+"yucca",
+"yucky",
+"yukon",
+"yummy",
+"yawn",
+"yeah",
+"year",
+"yeas",
+"yell",
+"yoke",
+"yolk",
+"york",
+"your",
+"yuan",
+"yuck",
+"yule",
 "cota",
 "suma",
 "mito",
 "nojo",
-"meio",
-"face",
-"auto",
-"teor",
-"tudo",
-"pose",
-"ante",
-"teve",
-"pela",
-"arte",
-"tese",
-"fora",
-"novo",
-"lume",
-"fito",
-"joia",
-"alma",
+"yes",
+"yet",
+"yin",
+"you",
+"yuk",
+"yum",
+"yup",
 "ovo",
 "bar",
 "vai",
@@ -66,7 +46,7 @@ static std::string list_all_words[60]={
 "pai"
     };
 
-const short  num_rows=12;
+const short  num_rows=10;
 const short num_of_words=20;
 short restart_count_down;
 char word_search[num_rows*num_rows];
@@ -169,7 +149,7 @@ void fit_words_connections(){
                     solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
                     is_reversed=false;
                     if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
-                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
+                    solution_pos[1][0]=solution_pos[0][0]+i;
                     solution_pos[1][1]=solution_pos[0][1]+list_of_words_added[0].length()-1-i-new_word_to_add.length()+1+j;
                     solution_pos[1][2]=solution_pos[1][0];
                     solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
