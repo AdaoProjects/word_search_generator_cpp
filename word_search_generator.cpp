@@ -2,51 +2,211 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-const short num_of_possibilites__words=2;
-static std::string list_all_words[40]={
-"present",
-"tutors",
-"yours",
-"youth",
-"yucca",
-"yucky",
-"yukon",
-"yummy",
-"yawn",
-"yeah",
-"year",
-"yeas",
-"yell",
-"yoke",
-"yolk",
-"york",
-"your",
-"yuan",
-"yuck",
-"yule",
-"cota",
-"suma",
-"mito",
+const short num_of_possibilites__words=10;
+static std::string list_all_words[200]={
+"aspecto",
+"virtude",
+"candura",
+"deboche",
+"mitigar",
+"cultura",
+"almejar",
+"redimir",
+"cordial",
+"exortar",
+"emergir",
+"trivial",
+"imputar",
+"recesso",
+"cinismo",
+"refutar",
+"sucinto",
+"sublime",
+"empatia",
+"embuste",
+"mazela",
+"alocar",
+"remoto",
+"nuance",
+"acesso",
+"ciente",
+"esteio",
+"receio",
+"objeto",
+"avidez",
+"acento",
+"isento",
+"eximir",
+"sisudo",
+"perene",
+"embora",
+"escusa",
+"alento",
+"dispor",
+"abster",
+"infame",
+"utopia",
+"nocivo",
+"alheio",
+"adorno",
+"gentil",
+"hostil",
+"legado",
+"idiota",
+"casual",
+"anseio",
+"escopo",
+"pressa",
+"apogeu",
+"exceto",
+"vereda",
+"mister",
+"eficaz",
+"julgar",
+"limiar",
+"justo",
+"honra",
+"muito",
+"lapso",
+"tange",
+"corja",
+"expor",
+"posse",
+"haver",
+"ardil",
+"desde",
+"sanar",
+"fazer",
+"cerne",
+"ideia",
+"torpe",
+"anexo",
+"moral",
+"poder",
+"assim",
+"recuo",
+"rubor",
+"folgo",
+"borra",
+"dotar",
+"nisto",
+"lance",
+"junta",
+"adido",
+"santo",
+"soar",
+"ater",
+"fase",
+"gozo",
+"casa",
+"rima",
+"sina",
+"rude",
+"voga",
+"cujo",
+"cedo",
+"onde",
+"sela",
+"mais",
+"cela",
 "nojo",
-"yes",
-"yet",
-"yin",
-"you",
-"yuk",
-"yum",
-"yup",
-"ovo",
-"bar",
-"vai",
-"lei",
-"seu",
-"rua",
-"dor",
+"meio",
+"face",
+"auto",
+"teor",
+"tudo",
+"pela",
+"foda",
+"pose",
+"ante",
+"teve",
+"base",
+"asco",
+"para",
+"alvo",
+"numa",
+"jugo",
+"traz",
+"logo",
+"alva",
+"agir",
+"vale",
+"nexo",
+"meta",
+"pude",
+"ente",
+"coxo",
+"vida",
+"saga",
+"medo",
+"idem",
+"cota",
+"veio",
+"urge",
+"zelo",
+"ruim",
+"pois",
+"ermo",
+"mote",
+"apto",
+"suma",
+"tolo",
+"crer",
+"como",
+"auge",
+"sede",
+"amor",
+"fato",
+"mito",
+"esmo",
+"brio",
+"caos",
+"vide",
+"rege",
+"todo",
+"toar",
+"saca",
+"remo",
+"neca",
+"golo",
+"sapa",
+"fone",
+"triz",
+"enta",
+"goro",
+"fel",
+"sob",
+"vil",
+"paz",
+"ser",
+"mal",
+"ver",
+"ter",
+"bem",
+"ego",
+"vir",
+"dar",
+"mas",
+"bom",
+"ora",
+"era",
+"rol",
+"elo",
+"tal",
+"vis",
+"luz",
+"com",
+"dia",
+"ato",
+"hum",
+"eis",
+"tez",
 "pro",
-"pai"
+"dor",
+"pai",
     };
 
-const short  num_rows=10;
+const short  num_rows=12;
 const short num_of_words=20;
 short restart_count_down;
 char word_search[num_rows*num_rows];
@@ -60,14 +220,14 @@ int main()
 {
      for(short w=0;w<1000 ;w++){
          create_new_word_search();
-         /*
+         
          printf("[");
          for(short i=0;i<num_of_words;i++){
-         prshortf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
+         printf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
          }
-         prshortf("],\n");
-        */
-
+         printf("],\n");
+        
+/*
          printf("[");
     for(short i=0;i<num_of_words;i++){
         printf("\"");
@@ -77,16 +237,16 @@ int main()
         printf("\",");
     }
     printf("],\n");
-  
+  */
    //prshort puzzle
    /*
-    prshortf("[\"");
+    printf("[\"");
     for (short i=0;i<num_rows;i++){
         for(short j=0; j<num_rows;j++){
-            prshortf("%c",word_search[num_rows*i+j]);
+            printf("%c",word_search[num_rows*i+j]);
         }
     }
-    prshortf("\"],\n");
+    printf("\"],\n");
 
     */
     }
@@ -159,7 +319,7 @@ void fit_words_connections(){
                     }
                     }
                 }else{
-                    solution_pos[1][0]=solution_pos[0][0]+i;
+                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
                     solution_pos[1][1]=solution_pos[0][1]+i-j;
                     solution_pos[1][2]=solution_pos[1][0];
                     solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
