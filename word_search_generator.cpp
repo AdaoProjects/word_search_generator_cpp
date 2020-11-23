@@ -220,14 +220,14 @@ int main()
 {
      for(short w=0;w<1000 ;w++){
          create_new_word_search();
-         
+         /*
          printf("[");
          for(short i=0;i<num_of_words;i++){
          printf("%i,%i,%i,%i,",solution_pos[i][0],solution_pos[i][1],solution_pos[i][2],solution_pos[i][3]);
          }
          printf("],\n");
-        
-/*
+        */
+
          printf("[");
     for(short i=0;i<num_of_words;i++){
         printf("\"");
@@ -237,7 +237,7 @@ int main()
         printf("\",");
     }
     printf("],\n");
-  */
+  
    //prshort puzzle
    /*
     printf("[\"");
@@ -265,9 +265,9 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             word_search[num_rows*p+h]=letters[x];
         }
     }
-    fit_words_connections();
+
     restart_count_down=0;
-         for(short j=4;j<num_of_words;j++){
+         for(short j=0;j<num_of_words;j++){
          add_new_word(j);
          }
 }
