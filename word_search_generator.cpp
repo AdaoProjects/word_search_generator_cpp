@@ -4,66 +4,6 @@
 #include <string>
 const short num_of_possibilites__words=10;
 static std::string list_all_words[200]={
-"avoided",
-"awaited",
-"awarded",
-"awesome",
-"awfully",
-"awkward",
-"babylon",
-"backers",
-"backing",
-"backlog",
-"younger",
-"wrapper",
-"wrecked",
-"wrestle",
-"wriggle",
-"wrinkle",
-"writers",
-"writing",
-"pyrrhic",
-"qualify",
-"wright",
-"wrists",
-"writer",
-"writes",
-"wrongs",
-"yanked",
-"yankee",
-"yearly",
-"yelled",
-"yellow",
-"cycles",
-"cygnus",
-"cypher",
-"cyprus",
-"cystic",
-"dabble",
-"daemon",
-"dagger",
-"dainty",
-"dallas",
-"button",
-"buyers",
-"buying",
-"buyout",
-"bylaws",
-"bypass",
-"cabins",
-"cables",
-"caches",
-"cadres",
-"averse",
-"avidly",
-"avoids",
-"avowed",
-"awaits",
-"awaken",
-"awards",
-"awhile",
-"babble",
-"babies",
 "rungs",
 "runny",
 "rural",
@@ -204,10 +144,20 @@ static std::string list_all_words[200]={
 "gas",
 "gay",
 "gee",
+"fun",
+"fur",
+"gad",
+"gag",
+"gan",
+"gap",
+"gar",
+"gas",
+"gay",
+"gee",
     };
 
-const short  num_rows=12;
-const short num_of_words=20;
+const short  num_rows=8;
+const short num_of_words=15;
 short restart_count_down;
 char word_search[num_rows*num_rows];
 short solution_pos[num_of_words][4];
@@ -271,269 +221,6 @@ char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
          add_new_word(j);
          }
 }
-void fit_words_connections(){
-    short x=rand()%num_of_possibilites__words;
-    std::string new_word_to_add=list_all_words[x];
-    list_of_words_added[0]=new_word_to_add;
-    solution_pos[0][0]=rand()%(num_rows-new_word_to_add.length()+1);
-    solution_pos[0][1]=rand()%(num_rows-new_word_to_add.length()+1);
-    solution_pos[0][2]=solution_pos[0][0]+new_word_to_add.length()-1;
-    solution_pos[0][3]=solution_pos[0][1]+new_word_to_add.length()-1;
-    bool is_reversed=false;
-    if(rand()%2==0){
-        is_reversed=true;
-    }
-    if(is_reversed){
-        for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
-        filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
-    }
-    }
-    else{
-    for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=new_word_to_add[i];
-        filled_spaces[num_rows*(solution_pos[0][0]+i)+solution_pos[0][1]+i]=1;
-    }
-    }
-    bool connection=false;
-    x=rand()%num_of_possibilites__words+num_of_possibilites__words;
-    new_word_to_add=list_all_words[x];
-    for (short i=0,length=list_of_words_added[0].length(); i<length;i++){
-        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
-            if(list_of_words_added[0][i]==new_word_to_add[j]){
-                connection=true;
-                if(is_reversed){
-                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
-                    solution_pos[1][1]=solution_pos[0][1]+list_of_words_added[0].length()-1-i-j;
-                    solution_pos[1][2]=solution_pos[1][0];
-                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
-                    is_reversed=false;
-                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
-                    solution_pos[1][0]=solution_pos[0][0]+i;
-                    solution_pos[1][1]=solution_pos[0][1]+list_of_words_added[0].length()-1-i-new_word_to_add.length()+1+j;
-                    solution_pos[1][2]=solution_pos[1][0];
-                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
-                    is_reversed=true;
-                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }else{
-                    solution_pos[1][0]=solution_pos[0][0]+list_of_words_added[0].length()-1-i;
-                    solution_pos[1][1]=solution_pos[0][1]+i-j;
-                    solution_pos[1][2]=solution_pos[1][0];
-                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
-                    is_reversed=false;
-                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
-                    solution_pos[1][0]=solution_pos[0][0]+i;
-                    solution_pos[1][1]=solution_pos[0][1]+i-new_word_to_add.length()+1+j;
-                    solution_pos[1][2]=solution_pos[1][0];
-                    solution_pos[1][3]=solution_pos[1][1]+new_word_to_add.length()-1;
-                    is_reversed=true;
-                    if(solution_pos[1][1]<0 || solution_pos[1][1]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }
-            }
-            if(connection==1){
-                break;
-            }
-        }
-        if(connection==1){
-                break;
-            }
-    }
-    
-    if(!connection){
-        add_new_word(1);
-    }else{
-    if(is_reversed){
-        for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[new_word_to_add.length()-i-1];
-        filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
-    }
-    }
-    else{
-    for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=new_word_to_add[i];
-        filled_spaces[num_rows*(solution_pos[1][0])+solution_pos[1][1]+i]=1;
-    }
-
-    }
-list_of_words_added[1]=new_word_to_add;
-    }
-    
-    connection=false;
-    bool shocks=false;
-    x=rand()%num_of_possibilites__words+num_of_possibilites__words*2;
-    new_word_to_add=list_all_words[x];
-    for (short i=0, length=list_of_words_added[1].length(); i<length;i++){
-        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
-            if(list_of_words_added[1][i]==new_word_to_add[j]){
-                connection=true;
-                if(is_reversed){
-                    solution_pos[2][0]=solution_pos[1][0]-j;
-                    solution_pos[2][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
-                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
-                    solution_pos[2][3]=solution_pos[2][1];
-                    is_reversed=false;
-                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
-                    solution_pos[2][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
-                    solution_pos[2][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
-                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
-                    solution_pos[2][3]=solution_pos[2][1];
-                    is_reversed=true;
-                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }else{
-                    solution_pos[2][0]=solution_pos[1][0]-j;
-                    solution_pos[2][1]=solution_pos[1][1]+i;
-                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
-                    solution_pos[2][3]=solution_pos[2][1];
-                    is_reversed=false;
-                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
-                    solution_pos[2][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
-                    solution_pos[2][1]=solution_pos[1][1]+i;
-                    solution_pos[2][2]=solution_pos[2][0]+new_word_to_add.length()-1;
-                    solution_pos[2][3]=solution_pos[2][1];
-                    is_reversed=true;
-                    if(solution_pos[2][0]<0 || solution_pos[2][0]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }
-            }
-            shocks=false;
-            if(connection){
-                for (short k =0,length_three=new_word_to_add.length(); k<length_three;k++){
-                if(filled_spaces[(solution_pos[2][0]+k)*num_rows+solution_pos[2][1]]==1){
-                    if(is_reversed){
-                        if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[2][0]+k)*num_rows        +solution_pos[2][1]]){
-                            shocks=true;
-                        }
-            }else{
-                if(new_word_to_add[k]!=word_search[(solution_pos[2][0]+k)*num_rows+solution_pos[2][1]]){
-                    shocks=true;
-                }
-            }
-        }
-    }
-            }
-            if(connection && !shocks){
-                break;
-            }
-        }
-        if(connection && !shocks){
-                break;
-            }
-    }
-    if(!connection || shocks){
-        add_new_word(2);
-    }else{
-if(is_reversed){
-        for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[new_word_to_add.length()-i-1];
-        filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
-    }
-    }
-    else{
-    for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=new_word_to_add[i];
-        filled_spaces[num_rows*(solution_pos[2][0]+i)+solution_pos[2][1]]=1;
-    }
-    }
-    list_of_words_added[2]=new_word_to_add;
-    }
-    
-    connection=false;
-    shocks=false;
-    x=rand()%num_of_possibilites__words+num_of_possibilites__words*3;
-    new_word_to_add=list_all_words[x];
-    for (short i=0, length=list_of_words_added[1].length(); i<length;i++){
-        for (short j=0, length_two=new_word_to_add.length(); j<length_two;j++){
-            if(list_of_words_added[1][i]==new_word_to_add[j]){
-                connection=true;
-                if(is_reversed){
-                    solution_pos[3][0]=solution_pos[1][0]-j;
-                    solution_pos[3][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
-                    solution_pos[3][2]=solution_pos[3][0]+new_word_to_add.length()-1;
-                    solution_pos[3][3]=solution_pos[3][1];
-                    is_reversed=false;
-                    if(solution_pos[3][0]<0 || solution_pos[3][0]>num_rows-new_word_to_add.length()){
-                    solution_pos[3][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
-                    solution_pos[3][1]=solution_pos[1][1]+list_of_words_added[1].length()-1-i;
-                    solution_pos[3][2]=solution_pos[3][0]+new_word_to_add.length()-1;
-                    solution_pos[3][3]=solution_pos[3][1];
-                    is_reversed=true;
-                    if(solution_pos[3][0]<0 || solution_pos[3][0]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }else{
-                    solution_pos[3][0]=solution_pos[1][0]-j;
-                    solution_pos[3][1]=solution_pos[1][1]+i;
-                    solution_pos[3][2]=solution_pos[3][0]+new_word_to_add.length()-1;
-                    solution_pos[3][3]=solution_pos[3][1];
-                    is_reversed=false;
-                    if(solution_pos[3][0]<0 || solution_pos[3][0]>num_rows-new_word_to_add.length()){
-                    solution_pos[3][0]=solution_pos[1][0]-new_word_to_add.length()+1+j;
-                    solution_pos[3][1]=solution_pos[1][1]+i;
-                    solution_pos[3][2]=solution_pos[3][0]+new_word_to_add.length()-1;
-                    solution_pos[3][3]=solution_pos[3][1];
-                    is_reversed=true;
-                    if(solution_pos[3][0]<0 || solution_pos[3][0]>num_rows-new_word_to_add.length()){
-                    connection=false;
-                    }
-                    }
-                }
-            }
-            shocks=false;
-            if(connection){
-                for (short k =0, length_three=new_word_to_add.length(); k<length_three;k++){
-                if(filled_spaces[(solution_pos[3][0]+k)*num_rows+solution_pos[3][1]]==1){
-                    if(is_reversed){
-                        if(new_word_to_add[new_word_to_add.length()-1-k]!=word_search[(solution_pos[3][0]+k)*num_rows        +solution_pos[3][1]]){
-                            shocks=true;
-                        }
-            }else{
-                if(new_word_to_add[k]!=word_search[(solution_pos[3][0]+k)*num_rows+solution_pos[3][1]]){
-                    shocks=true;
-                }
-            }
-        }
-    }
-            }
-            if(connection && !shocks){
-                break;
-            }
-        }
-        if(connection && !shocks){
-                break;
-            }
-    }
-    
-    if(!connection || shocks){
-        add_new_word(3);
-    }else{
-if(is_reversed){
-        for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=new_word_to_add[new_word_to_add.length()-i-1];
-        filled_spaces[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=1;
-    }
-    }
-    else{
-    for(short i=0, length=new_word_to_add.length(); i<length;i++){
-        word_search[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=new_word_to_add[i];
-        filled_spaces[num_rows*(solution_pos[3][0]+i)+solution_pos[3][1]]=1;
-    }
-    }
-    list_of_words_added[3]=new_word_to_add;
-    }
-    
-}
 void add_new_word(short u){
 restart_count_down++;
     if(restart_count_down>500){
@@ -552,41 +239,39 @@ restart_count_down++;
     short length=new_word_to_add.length();
 
 x=rand()%4;
-    if(x==0){
-        type_of_position="horizontal";
+switch(x) {
+    case 0 :
         row_start=rand()%num_rows;
         column_start=rand()%(num_rows-new_word_to_add.length()+1);
         row_end=row_start;
         column_end=column_start+new_word_to_add.length()-1;
-    }else if(x==1){
-        type_of_position="vertical";
+      break;
+    case 1 :
         row_start=rand()%(num_rows-new_word_to_add.length()+1);
         column_start=rand()%num_rows;
         row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start;
-    }else if(x==2){
-        type_of_position="diagonal_SE";
+      break; //op
+      case 2 :
         row_start=rand()%(num_rows-new_word_to_add.length()+1);
         column_start=rand()%(num_rows-new_word_to_add.length()+1);
         row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start+new_word_to_add.length()-1;
-    }else{
-        type_of_position="diagonal_SO";
+      break; //op
+      case 3 :
         row_start=rand()%(num_rows-new_word_to_add.length()+1);;
         column_start=num_rows-1-rand()%(num_rows-new_word_to_add.length()+1);
         row_end=row_start+new_word_to_add.length()-1;
         column_end=column_start-new_word_to_add.length()+1;
-    }
-    is_reversed=false;
-    x=rand()%2;
-    if(x==1){
-        is_reversed=true;
-    }
+      break; //op
+};
+    is_reversed=rand()%2;
     shocks=false;
     short limit_row=0;
     short limit_column=0;
-    if(type_of_position=="horizontal"){
-    for(short k=0; k<num_rows;k++){
+    switch(x) {
+    case 0 :
+        for(short k=0; k<num_rows;k++){
         for(short l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start+l-limit_column;
@@ -621,8 +306,9 @@ x=rand()%4;
         break;
     }
     }
-    }else if(type_of_position=="vertical"){
-for(short k=0; k<num_rows;k++){
+      break;
+    case 1 :
+        for(short k=0; k<num_rows;k++){
         for(short l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start+l-limit_column;
@@ -657,8 +343,9 @@ for(short k=0; k<num_rows;k++){
         break;
     }
     }
-    }else if(type_of_position=="diagonal_SE"){
-for(short k=0; k<num_rows;k++){
+      break; //op
+      case 2 :
+        for(short k=0; k<num_rows;k++){
         for(short l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start+l-limit_column;
@@ -693,8 +380,9 @@ for(short k=0; k<num_rows;k++){
         break;
     }
     }
-    }else if(type_of_position=="diagonal_SO"){
-        for(short k=0; k<num_rows;k++){
+      break; //op
+      case 3 :
+         for(short k=0; k<num_rows;k++){
         for(short l=0;l<num_rows;l++){
             row_start=row_start+k-limit_row;
             column_start=column_start-l+limit_column;
@@ -729,16 +417,18 @@ for(short k=0; k<num_rows;k++){
         break;
     }
     }
-    }
-    
+      break; //op
+};
+   
     
 
 
     if(shocks){
         add_new_word(u);
     }else{
-    if(type_of_position=="horizontal"){
-    if(is_reversed){
+        switch(x) {
+    case 0 :
+        if(is_reversed){
         for(short i=0; i<length;i++){
         word_search[num_rows*(row_start)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start)+column_start+i]=1;
@@ -751,8 +441,9 @@ for(short k=0; k<num_rows;k++){
     }
 
     }
-    }else if(type_of_position=="vertical"){
-    if(is_reversed){
+      break;
+    case 1 :
+        if(is_reversed){
         for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start]=1;
@@ -764,8 +455,9 @@ for(short k=0; k<num_rows;k++){
         filled_spaces[num_rows*(row_start+i)+column_start]=1;
     }
     }
-    }else if(type_of_position=="diagonal_SE"){
-    if(is_reversed){
+      break; //op
+      case 2 :
+         if(is_reversed){
         for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start+i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
@@ -777,8 +469,9 @@ for(short k=0; k<num_rows;k++){
         filled_spaces[num_rows*(row_start+i)+column_start+i]=1;
     }
     }
-    }else if(type_of_position=="diagonal_SO"){
-    if(is_reversed){
+      break; //op
+      case 3 :
+        if(is_reversed){
         for(short i=0; i<length;i++){
         word_search[num_rows*(row_start+i)+column_start-i]=new_word_to_add[new_word_to_add.length()-i-1];
         filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
@@ -790,7 +483,8 @@ for(short k=0; k<num_rows;k++){
         filled_spaces[num_rows*(row_start+i)+column_start-i]=1;
     }
     }
-    }
+      break; //op
+};
     
     list_of_words_added[u]=new_word_to_add;
     solution_pos[u][0]=row_start;
